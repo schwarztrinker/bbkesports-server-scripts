@@ -1,0 +1,18 @@
+# Counter Strike 2 Server
+  - mkdir /opt/cs2
+  - cd /opt/cs2
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh cs2server' adminuser
+  - su -c './cs2server auto-install' adminuser
+  - su -c './cs2server start' adminuser
+# Euro Truck Sim 2 Server
+  - mkdir /opt/ets2
+  - cd /opt/ets2
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh ets2server' adminuser
+  - su -c './ets2server auto-install' adminuser
+  - su -c './ets2server start' adminuser

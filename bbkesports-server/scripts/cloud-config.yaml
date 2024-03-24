@@ -1,0 +1,80 @@
+#cloud-config
+package_update: true
+
+packages:
+  - gdb
+  - curl 
+  - wget
+  - git
+  - curl
+  - wget
+  - file
+  - tar
+  - bzip2
+  - gzip
+  - unzip
+  - bsdmainutils
+  - python3
+  - util-linux
+  - ca-certificates
+  - binutils
+  - bc
+  - jq
+  - tmux
+  - netcat
+  - lib32gcc1
+  - lib32stdc++6
+  - libsdl2-2.0-0:i386
+  - libsdl2-2.0-0:i386
+  - steamcmd
+  - libtinfo5:i386
+write_files:
+  - owner: adminuser:adminuser
+    path: /tmp/common.cfg
+    defer: true
+    content: |
+      ip="0.0.0.0"
+      port="27015"
+      clientport="27005"
+      sourcetvport="27020"
+      defaultmap="ttt_minecraft_b5"
+      maxplayers="16"
+      tickrate="66"
+      gamemode="terrortown"
+      wscollectionid="3184011009"
+      servername="BBKESPORTS"
+
+
+      rcon_password=""
+      sv_password=""
+      sv_downloadurl=""
+      sv_loadingurl="bbkesforum.de/forum/index.php"
+      sv_allowupload=0
+      sv_allowdownload=0
+      sv_allowcslua=0
+      sv_cheats=0
+      sv_hibernate_think=0
+      sv_location="de"
+      sv_region=255
+
+      ttt_preptime_seconds=15
+      ttt_posttime_seconds=15
+
+      ttt_traitor_pct=0.28
+      ttt_traitor_max=2
+
+
+
+runcmd:
+# Garrys Mod Server
+  - mkdir /opt/garrysmod
+  - cd /opt/garrysmod
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh gmodserver' adminuser
+  - su -c './gmodserver auto-install' adminuser
+  - cp /tmp/common.cfg /opt/garrysmod/lgsm/config-lgsm/gmodserver/common.cfg
+  - su -c './gmodserver start' adminuser
+  
+
