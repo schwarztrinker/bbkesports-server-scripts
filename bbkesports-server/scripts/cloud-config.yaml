@@ -41,7 +41,7 @@ write_files:
       maxplayers="16"
       tickrate="66"
       gamemode="terrortown"
-      wscollectionid="3184011009"
+      wscollectionid="1761722254"
       servername="BBKESPORTS"
 
 
@@ -65,7 +65,12 @@ write_files:
 
 
 
+# https://steamcommunity.com/sharedfiles/filedetails/?id=1761722254
+
 runcmd:
+  - wget https://launchpad.net/ubuntu/+source/ncurses/6.4-2/+build/25522504/+files/libtinfo5_6.4-2_i386.deb
+  - sudo dpkg -i libtinfo5_6.4-2_i386.deb 
+
 # Garrys Mod Server
   - mkdir /opt/garrysmod
   - cd /opt/garrysmod
@@ -76,5 +81,27 @@ runcmd:
   - su -c './gmodserver auto-install' adminuser
   - cp /tmp/common.cfg /opt/garrysmod/lgsm/config-lgsm/gmodserver/common.cfg
   - su -c './gmodserver start' adminuser
+
+#  Factorio
+  - mkdir /opt/fctrserver
+  - cd /opt/fctrserver
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh fctrserver' adminuser
+  - su -c './fctrserver auto-install' adminuser
+  - su -c './fctrserver start' adminuser
+
+#  Necesse
+  - mkdir /opt/necserver
+  - cd /opt/necserver
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh necserver' adminuser
+  - su -c './necserver auto-install' adminuser
+  - su -c './necserver start' adminuser
+
+
   
 

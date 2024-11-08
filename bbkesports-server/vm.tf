@@ -61,7 +61,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${local.global_prefix}-vm"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
-  size                            = "Standard_B2ms"
+  size                            = "Standard_B4s"
   admin_username                  = "adminuser"
   disable_password_authentication = false
   network_interface_ids = [
@@ -77,12 +77,53 @@ resource "azurerm_linux_virtual_machine" "main" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
+    offer     = "ubuntu-24_04-lts"
+    sku       = "server"
     version   = "latest"
   }
 
   custom_data = data.cloudinit_config.config.rendered
+}
+
+
+# Network Security Group
+# Network Security Group allowing all inbound traffic
+resource "azurerm_network_security_group" "vm_nsg" {
+  name                = "${local.global_prefix}-nsg"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+
+  # Allow all inbound TCP traffic
+  security_rule {
+    name                       = "Allow-All-TCP"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  # Allow all inbound UDP traffic
+  security_rule {
+    name                       = "Allow-All-UDP"
+    priority                   = 1002
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Udp"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
+
+# Associate the NSG with the Network Interface
+resource "azurerm_network_interface_security_group_association" "vm_nic_nsg_association" {
+  network_interface_id      = azurerm_network_interface.vm.id
+  network_security_group_id = azurerm_network_security_group.vm_nsg.id
 }
 
 
