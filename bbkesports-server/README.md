@@ -5,6 +5,7 @@
 ```cfg
 CLOUDFLARE_API_TOKEN=0kO8Vxxxxxxx
 ```
+
 ## After Deployment steps 
 ``` bash
 steamcmd
@@ -15,7 +16,23 @@ steamcmd
 
 ## Server Configuration / Console 
 
-```
+```bash 
 cd /opt/gmodserver
 ./gmodserver console
 ./gmodserver debug
+```
+
+## GMOD Server 
+
+Open ULX and enable admin
+
+
+```bash 
+cd /opt/gmodserver
+./gmodserver console
+
+ulx adduser schwarztrinker superadmin
+```
+In Garrys Mod: bind m xgui
+
+Open ULX in GarrysMod via Key "m"
