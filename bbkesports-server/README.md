@@ -1,5 +1,13 @@
 # BBKESports Server Collection
 
+## SSH delete old key
+
+```bash
+ssh-keygen -R bbke.mstoecker.de -f C:\Users\marti\.ssh\known_hosts
+```
+
+
+
 ## .env File
 
 ```cfg
@@ -36,3 +44,7 @@ ulx adduser schwarztrinker superadmin
 In Garrys Mod: bind m xgui
 
 Open ULX in GarrysMod via Key "m"
+
+
+## Import Backups 
+scp -r "../backups/necserver_backup_zbz_202411/opt/necserver/serverfiles/saves/worlds/MyWorld" adminuser@bbke.mstoecker.de:/opt/necserver/serverfiles/saves/worlds

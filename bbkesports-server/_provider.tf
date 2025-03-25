@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.9.0"
+      version = "4.24.0"
     }
 
     cloudflare = {
@@ -14,7 +14,7 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id = "f60af1ce-fd03-4168-9851-c69589e517f5"
+  subscription_id = "9ac3d5b0-5544-4d95-b89d-95cf6c1751e8"
 }
 
 provider "cloudflare" {

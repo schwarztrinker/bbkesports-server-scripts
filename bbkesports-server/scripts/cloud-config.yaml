@@ -28,6 +28,10 @@ packages:
   - libsdl2-2.0-0:i386
   - steamcmd
   - libtinfo5:i386
+  - btop
+  - libatomic1 
+  - libpulse0 
+  - libpulse-mainloop-glib0
 write_files:
   - owner: adminuser:adminuser
     path: /tmp/common.cfg
@@ -41,7 +45,7 @@ write_files:
       maxplayers="16"
       tickrate="66"
       gamemode="terrortown"
-      wscollectionid="1761722254"
+      wscollectionid="3451718572"
       servername="BBKESPORTS"
 
 
@@ -90,13 +94,18 @@ runcmd:
   - [chmod, +x, linuxgsm.sh]
   - su -c 'bash linuxgsm.sh fctrserver' adminuser
   - su -c './fctrserver auto-install' adminuser
+
+  # - awk '{sub(/"require_user_verification": *true/, "\"require_user_verification\": false")}1' /opt/fctrserver/serverfiles/data/fctrserver.json > /opt/fctrserver/serverfiles/data/fctrserver.json.tmp && mv /opt/fctrserver/serverfiles/data/fctrserver.json.tmp /opt/fctrserver/serverfiles/data/fctrserver.json
+  # set game as non-public!
   - su -c './fctrserver start' adminuser
+
 
 #  Necesse
   - mkdir /opt/necserver
   - cd /opt/necserver
   - chown adminuser .
   - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+
   - [chmod, +x, linuxgsm.sh]
   - su -c 'bash linuxgsm.sh necserver' adminuser
   - su -c './necserver auto-install' adminuser
@@ -104,4 +113,20 @@ runcmd:
 
 
   
+# Valheim
+  - mkdir /opt/vhserver
+  - cd /opt/vhserver
+  - chown adminuser .
+  - [curl, -Lo, linuxgsm.sh, https://linuxgsm.sh]
+  - [chmod, +x, linuxgsm.sh]
+  - su -c 'bash linuxgsm.sh vhserver' adminuser
+  - su -c './vhserver auto-install' adminuser
 
+#  vim lgsm/config-lgsm/vhserver/vhserver.cfg 
+#servername="bbke-server"
+
+#serverpassword="bbke"
+
+#gameworld="Dedicated"
+
+#crossplay=0
