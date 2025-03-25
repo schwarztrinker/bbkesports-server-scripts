@@ -4,6 +4,13 @@ resource "random_password" "vm_password" {
   override_special = "_%@"
 }
 
+resource "azurerm_role_assignment" "rg_kv" {
+  principal_id = local.me_obj_id
+  scope = azurerm_resource_group.main.id
+  role_definition_name = "Key Vault Secrets Officer"
+  
+}
+
 resource "azurerm_key_vault" "main" {
   name                        = "${local.global_prefix}-kv"
   location                    = azurerm_resource_group.main.location
@@ -18,6 +25,8 @@ resource "azurerm_key_vault_secret" "vm_password" {
   name         = "vm-password"
   value        = random_password.vm_password.result
   key_vault_id = azurerm_key_vault.main.id
+
+  depends_on = [ azurerm_role_assignment.rg_kv ]
 }
 
 
@@ -61,7 +70,7 @@ resource "azurerm_linux_virtual_machine" "main" {
   name                            = "${local.global_prefix}-vm"
   resource_group_name             = azurerm_resource_group.main.name
   location                        = azurerm_resource_group.main.location
-  size                            = "Standard_B4s"
+  size                            = local.vm_size
   admin_username                  = "adminuser"
   disable_password_authentication = false
   network_interface_ids = [
